@@ -1,0 +1,344 @@
+/* ========================================
+   DESIGN TOKENS & RESET
+   ======================================== */
+:root {
+  /* Color Palette — deep dark with violet/cyan accents */
+  --bg-deep:        #0a0a12;
+  --bg-calc:        rgba(18, 18, 30, 0.75);
+  --bg-display:     rgba(10, 10, 20, 0.6);
+  --bg-number:      rgba(255, 255, 255, 0.06);
+  --bg-number-hover:rgba(255, 255, 255, 0.12);
+  --bg-utility:     rgba(160, 140, 255, 0.12);
+  --bg-utility-hover:rgba(160, 140, 255, 0.22);
+  --bg-operator:    rgba(110, 90, 255, 0.2);
+  --bg-operator-hover:rgba(110, 90, 255, 0.35);
+  --bg-equals:      linear-gradient(135deg, #6c5ce7, #a855f7, #6366f1);
+  --bg-equals-hover:linear-gradient(135deg, #7c6cf7, #b865ff, #7376ff);
+  --text-primary:   #f0eef6;
+  --text-secondary: #9794a8;
+  --text-operator:  #c4b5fd;
+  --text-utility:   #a8a0d0;
+  --text-equals:    #ffffff;
+  --border-glass:   rgba(255, 255, 255, 0.08);
+  --shadow-calc:    0 30px 80px rgba(0, 0, 0, 0.6),
+                    0 0 120px rgba(100, 80, 220, 0.12);
+  --shadow-btn:     0 2px 8px rgba(0, 0, 0, 0.25);
+  --shadow-equals:  0 4px 20px rgba(108, 92, 231, 0.45);
+  --radius-calc:    28px;
+  --radius-btn:     16px;
+  --radius-display: 20px;
+  --font-family:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --transition:     all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html, body {
+  height: 100%;
+  font-family: var(--font-family);
+  background: var(--bg-deep);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+/* ========================================
+   SCENE & BACKGROUND
+   ======================================== */
+.scene {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  position: relative;
+}
+/* Floating gradient orbs */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.35;
+  pointer-events: none;
+  will-change: transform;
+}
+.orb-1 {
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle, #6c5ce7, transparent 70%);
+  top: -10%;
+  left: -8%;
+  animation: float-1 18s ease-in-out infinite;
+}
+.orb-2 {
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, #a855f7, transparent 70%);
+  bottom: -5%;
+  right: -5%;
+  animation: float-2 22s ease-in-out infinite;
+}
+.orb-3 {
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(circle, #38bdf8, transparent 70%);
+  top: 50%;
+  left: 60%;
+  animation: float-3 15s ease-in-out infinite;
+}
+@keyframes float-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%      { transform: translate(60px, 40px) scale(1.1); }
+  66%      { transform: translate(-30px, 70px) scale(0.95); }
+}
+@keyframes float-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%      { transform: translate(-50px, -30px) scale(1.08); }
+  66%      { transform: translate(40px, -60px) scale(0.92); }
+}
+@keyframes float-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(-40px, 50px) scale(1.12); }
+}
+/* ========================================
+   CALCULATOR CONTAINER
+   ======================================== */
+.calculator {
+  width: 360px;
+  background: var(--bg-calc);
+  backdrop-filter: blur(40px) saturate(1.4);
+  -webkit-backdrop-filter: blur(40px) saturate(1.4);
+  border-radius: var(--radius-calc);
+  border: 1px solid var(--border-glass);
+  box-shadow: var(--shadow-calc);
+  padding: 24px;
+  position: relative;
+  z-index: 1;
+  animation: calc-enter 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes calc-enter {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+/* ========================================
+   DISPLAY
+   ======================================== */
+.display {
+  background: var(--bg-display);
+  border-radius: var(--radius-display);
+  border: 1px solid var(--border-glass);
+  padding: 24px 24px 20px;
+  margin-bottom: 20px;
+  min-height: 110px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  overflow: hidden;
+}
+.display-expression {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--text-secondary);
+  min-height: 22px;
+  word-break: break-all;
+  text-align: right;
+  width: 100%;
+  transition: var(--transition);
+  letter-spacing: 0.5px;
+}
+.display-result {
+  font-size: 44px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.15;
+  word-break: break-all;
+  text-align: right;
+  width: 100%;
+  transition: font-size 0.25s ease, color 0.25s ease;
+  letter-spacing: -1px;
+}
+.display-result.shrink {
+  font-size: 32px;
+}
+.display-result.evaluating {
+  color: #c4b5fd;
+}
+/* ========================================
+   BUTTON GRID
+   ======================================== */
+.btn-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+/* ========================================
+   BUTTONS — BASE
+   ======================================== */
+.btn {
+  font-family: var(--font-family);
+  font-size: 20px;
+  font-weight: 500;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: var(--radius-btn);
+  padding: 0;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+/* Ripple effect container */
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at var(--ripple-x, 50%) var(--ripple-y, 50%), rgba(255,255,255,0.25), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+.btn.ripple::after {
+  opacity: 1;
+  animation: ripple-fade 0.6s ease forwards;
+}
+@keyframes ripple-fade {
+  to { opacity: 0; }
+}
+/* Active press effect */
+.btn:active {
+  transform: scale(0.94);
+}
+/* ========================================
+   BUTTON VARIANTS
+   ======================================== */
+/* Number buttons */
+.btn-number {
+  background: var(--bg-number);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-btn);
+}
+.btn-number:hover {
+  background: var(--bg-number-hover);
+}
+/* Zero button spans 2 columns */
+.btn-zero {
+  grid-column: span 2;
+}
+/* Utility buttons (AC, backspace, %) */
+.btn-utility {
+  background: var(--bg-utility);
+  color: var(--text-utility);
+  box-shadow: var(--shadow-btn);
+}
+.btn-utility:hover {
+  background: var(--bg-utility-hover);
+}
+.btn-utility svg {
+  stroke: var(--text-utility);
+}
+/* Operator buttons */
+.btn-operator {
+  background: var(--bg-operator);
+  color: var(--text-operator);
+  font-size: 24px;
+  font-weight: 600;
+  box-shadow: var(--shadow-btn);
+}
+.btn-operator:hover {
+  background: var(--bg-operator-hover);
+}
+.btn-operator.active {
+  background: rgba(110, 90, 255, 0.45);
+  box-shadow: 0 0 20px rgba(108, 92, 231, 0.3);
+}
+/* Equals button */
+.btn-equals {
+  background: var(--bg-equals);
+  color: var(--text-equals);
+  font-size: 26px;
+  font-weight: 700;
+  box-shadow: var(--shadow-equals);
+}
+.btn-equals:hover {
+  background: var(--bg-equals-hover);
+  box-shadow: 0 6px 28px rgba(108, 92, 231, 0.55);
+}
+/* ========================================
+   KEYBOARD HINT
+   ======================================== */
+.keyboard-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 16px;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-secondary);
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+  letter-spacing: 0.3px;
+}
+.keyboard-hint svg {
+  stroke: var(--text-secondary);
+  opacity: 0.7;
+}
+.keyboard-hint.flash {
+  opacity: 1;
+}
+/* ========================================
+   FOCUS STYLES (Accessibility)
+   ======================================== */
+.btn:focus-visible {
+  outline: 2px solid #a855f7;
+  outline-offset: 2px;
+}
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (max-width: 420px) {
+  .calculator {
+    width: 100%;
+    max-width: 360px;
+    padding: 18px;
+    border-radius: 24px;
+  }
+  .btn {
+    height: 58px;
+    font-size: 18px;
+    border-radius: 14px;
+  }
+  .btn-grid {
+    gap: 10px;
+  }
+  .display-result {
+    font-size: 38px;
+  }
+}
+@media (max-height: 680px) {
+  .display {
+    min-height: 90px;
+    padding: 18px 20px 14px;
+  }
+  .btn {
+    height: 54px;
+  }
+  .btn-grid {
+    gap: 8px;
+  }
+}

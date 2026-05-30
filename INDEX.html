@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A beautifully designed calculator with arithmetic operations, keyboard support, and real-time result display.">
+  <title>Calculator — Elegant Calc</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="STYLE.css">
+</head>
+<body>
+  <div class="scene">
+    <!-- Animated background orbs -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="calculator" id="calculator">
+      <!-- Display -->
+      <div class="display" id="display">
+        <div class="display-expression" id="display-expression"></div>
+        <div class="display-result" id="display-result">0</div>
+      </div>
+      <!-- Button Grid -->
+      <div class="btn-grid">
+        <button class="btn btn-utility" id="btn-clear" data-action="clear">AC</button>
+        <button class="btn btn-utility" id="btn-backspace" data-action="backspace">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"/><line x1="18" y1="9" x2="12" y2="15"/><line x1="12" y1="9" x2="18" y2="15"/></svg>
+        </button>
+        <button class="btn btn-utility" id="btn-percent" data-action="percent">%</button>
+        <button class="btn btn-operator" id="btn-divide" data-action="operator" data-value="÷">÷</button>
+        <button class="btn btn-number" id="btn-7" data-action="number" data-value="7">7</button>
+        <button class="btn btn-number" id="btn-8" data-action="number" data-value="8">8</button>
+        <button class="btn btn-number" id="btn-9" data-action="number" data-value="9">9</button>
+        <button class="btn btn-operator" id="btn-multiply" data-action="operator" data-value="×">×</button>
+        <button class="btn btn-number" id="btn-4" data-action="number" data-value="4">4</button>
+        <button class="btn btn-number" id="btn-5" data-action="number" data-value="5">5</button>
+        <button class="btn btn-number" id="btn-6" data-action="number" data-value="6">6</button>
+        <button class="btn btn-operator" id="btn-subtract" data-action="operator" data-value="−">−</button>
+        <button class="btn btn-number" id="btn-1" data-action="number" data-value="1">1</button>
+        <button class="btn btn-number" id="btn-2" data-action="number" data-value="2">2</button>
+        <button class="btn btn-number" id="btn-3" data-action="number" data-value="3">3</button>
+        <button class="btn btn-operator" id="btn-add" data-action="operator" data-value="+">+</button>
+        <button class="btn btn-number btn-zero" id="btn-0" data-action="number" data-value="0">0</button>
+        <button class="btn btn-number" id="btn-decimal" data-action="decimal" data-value=".">.</button>
+        <button class="btn btn-equals" id="btn-equals" data-action="equals">=</button>
+      </div>
+      <!-- Keyboard hint -->
+      <div class="keyboard-hint" id="keyboard-hint">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M10 12h.01M14 12h.01M18 12h.01M8 16h8"/></svg>
+        <span>Keyboard supported</span>
+      </div>
+    </div>
+  </div>
+  <script src="SCRIPT.js"></script>
+</body>
+</html>
